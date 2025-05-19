@@ -11,7 +11,7 @@
   left: 50%;
   top: 0;
   bottom: 0;
-  width: 4px;
+  width: 2px;
   background: #222;
   border-radius: 2px;
   transform: translateX(-50%);
@@ -20,7 +20,7 @@
 
 .timeline-item {
   width: 90%;
-  padding: 2em 0;
+  padding: 0em 0;
   position: relative;
   display: flex;
   justify-content: flex-end;
@@ -41,6 +41,8 @@
 }
 
 .timeline-content {
+  display: flex;
+  align-items: flex-start;
   background: #fff;
   padding: 1.5em;
   border-radius: 1em;
@@ -54,13 +56,37 @@
   width: 80px;
   height: 80px;
   object-fit: contain;
-  margin-bottom: 0.8em;
   border-radius: 8px;
   background: #f7f7f7;
   border: 1px solid #eee;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+  margin-right: 1.5em;
+  /* Space between logo and details */
+  margin-left: 0;
+  margin-bottom: 0;
+  /* Remove bottom margin since logo is now horizontal */
+}
+
+.timeline-logo-left {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  margin-left: 1.5em;
+  margin-bottom: 0;
+  /* Remove bottom margin since logo is now horizontal */
+}
+
+.timeline-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.timeline-details h3 {
+  margin: 0 0 0.2em 0;
 }
 
 .timeline-date {
@@ -77,6 +103,8 @@
 
 .timeline-left .timeline-content {
   margin-right: 2em;
+  flex-direction: row-reverse;
+  text-align: right;
 }
 
 .timeline-right .timeline-content {
