@@ -1,0 +1,127 @@
+.timeline {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2em 0;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0; bottom: 0;
+  width: 4px;
+  background: #222;
+  border-radius: 2px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.timeline-item {
+  width: 50%;
+  padding: 2em 0;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  clear: both;
+  z-index: 1;
+}
+
+.timeline-left {
+  left: 0;
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.timeline-right {
+  left: 50%;
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.timeline-content {
+  background: #fff;
+  padding: 1.5em;
+  border-radius: 1em;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+  max-width: 350px;
+  position: relative;
+}
+
+.timeline-logo {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  margin-bottom: 0.8em;
+  border-radius: 8px;
+  background: #f7f7f7;
+  border: 1px solid #eee;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.timeline-date {
+  color: #555;
+  font-size: 0.95em;
+  margin-bottom: 0.3em;
+}
+
+.timeline-role {
+  font-weight: 600;
+  color: #2d4ea2;
+  margin-bottom: 0.5em;
+}
+
+.timeline-left .timeline-content {
+  margin-right: 2em;
+}
+
+.timeline-right .timeline-content {
+  margin-left: 2em;
+}
+
+/* Connector circle */
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  top: 2.5em;
+  right: -11px;
+  width: 18px;
+  height: 18px;
+  background: #222;
+  border-radius: 50%;
+  z-index: 2;
+  border: 4px solid #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.timeline-right::after {
+  left: -11px;
+  right: auto;
+}
+
+/* Responsive Design */
+@media (max-width: 800px) {
+  .timeline {
+    max-width: 100%;
+    padding: 1em 0;
+  }
+  .timeline::before {
+    left: 20px;
+  }
+  .timeline-item, .timeline-left, .timeline-right {
+    width: 100%;
+    left: 0;
+    justify-content: flex-start;
+    text-align: left;
+  }
+  .timeline-left .timeline-content, .timeline-right .timeline-content {
+    margin: 0 0 0 3em;
+    max-width: 90vw;
+  }
+  .timeline-item::after, .timeline-right::after {
+    left: 5px !important;
+    right: auto !important;
+    top: 2.5em;
+  }
+}
