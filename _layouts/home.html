@@ -13,18 +13,14 @@ layout: default
   <div class="timeline">
     {% assign experiences = site.experiences | sort: "start_date" | reverse %}
     {% for exp in experiences %} {% assign remainder = forloop.index | modulo: 2
-    %} {% assign date_format = site.minima.date_format | default: "%b %Y" %} {%
-    if remainder == 0 %}
+    %} {% assign date_format = site.minima.date_format | default: "%b %Y" %}
+    {% if remainder == 0 %}
     <div class="timeline-item timeline-right">
       {% else %}
       <div class="timeline-item timeline-left">
         {% endif %}
         <div class="timeline-content">
-          <img
-            src="{{ exp.logo }}"
-            alt="{{ exp.company }} logo"
-            class="timeline-logo"
-          />
+          <img src="{{ exp.logo }}" alt="{{ exp.company }} logo" class="timeline-logo" />
           <h3>{{ exp.company }}</h3>
           <div class="timeline-date">
             {{ exp.start_date | date: date_format }} – {{ exp.end_date | date:
