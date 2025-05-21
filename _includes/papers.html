@@ -1,18 +1,26 @@
-  <h2 style="text-align: center; margin-top: 1em">
-    Papers
-  </h2>
-
-<div class="papers-row">
-  {% assign sorted_papers = site.papers | sort: "date" | reverse %}
-  {% for paper in sorted_papers limit:10 %}
+<h2 style="text-align: center; margin-top: 1em">Papers</h2>
+<div class="papers-carousel-container">
+  <div class="papers-row" id="papers-row">
+    {% assign sorted_papers = site.papers | sort: "date" | reverse %} {% for
+    paper in sorted_papers %}
     <div class="paper-card">
+      <div class="paper-date">{{ paper.date | date: "%b %Y" }}</div>
       <a href="{{ paper.link }}" target="_blank">
-        <img src="{{ paper.thumbnail }}" alt="{{ paper.title }}" class="paper-thumb" />
+        <img
+          src="{{ paper.thumbnail }}"
+          alt="{{ paper.title }}"
+          class="paper-thumb"
+        />
       </a>
       <div class="paper-info">
-        <a href="{{ paper.link }}" target="_blank" class="paper-title">{{ paper.title }}</a>
-        <div class="paper-date">{{ paper.date | date: "%b %Y" }}</div>
+        <a href="{{ paper.link }}" target="_blank" class="paper-title"
+          >{{ paper.title | truncatewords: 10, '...' }}</a
+        >
       </div>
+
+
     </div>
-  {% endfor %}
+
+    {% endfor %}
+  </div>
 </div>
