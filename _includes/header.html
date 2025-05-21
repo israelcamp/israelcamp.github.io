@@ -1,32 +1,37 @@
 <header role="banner">
-
  <!-- Header Start -->
  <div style="
-  display: flex;
-  align-items: center;
-quid + HTML + CSS solution for your papers collection.
-  justify-content: center;
-  background: #f7f7f7;
-  padding: 2em 1em;
-  width: 100%;
-">
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(130deg, #f7971e 0%, #ffd202 0%, #21c8f6 70%, #6372ff 100%);
+      padding: 2em 1em;
+      width: 100%;
+    ">
   <img src="assets/me.jpeg" alt="Your Name" style="
-    width: 160px;
-    height: 160px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #fff;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
-    margin-left: 30%;
-    margin-right: 2em;
-  ">
-  <div style="flex: 1;">
-   <h1 style="margin: 0 0 0.3em 0; font-size: 2.5em;">{{ site.author | escape }}</h1>
-   <p style="margin: 0.4em 0;">{{ site.city }}, {{ site.state }} - {{ site.country}}</p>
-   <p style="margin: 0.4em 0;">Applied Mathematician, Masters in Electrical Eng.</p>
-   <p style="margin: 0.4em 0;"><a href="mailto:{{site.email}}">{{site.email}}</a></p>
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #fff;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
+        margin-left: 30%;
+        margin-right: 2em;
+      " />
+  <div style="flex: 1">
+   <h1 style="margin: 0 0 0.3em 0; font-size: 2.5em">
+    {{ site.author | escape }}
+   </h1>
+   <p style="margin: 0.4em 0">
+    {{ site.city }}, {{ site.state }} - {{ site.country}}
+   </p>
+   <p style="margin: 0.4em 0">
+    Applied Mathematician, Masters in Electrical Eng.
+   </p>
+   <p style="margin: 0.4em 0">
+    <a href="mailto:{{site.email}}">{{site.email}}</a>
+   </p>
   </div>
  </div>
  <!-- Header End -->
-
 </header>
