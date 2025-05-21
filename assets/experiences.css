@@ -22,9 +22,6 @@
 .timeline-right {
   margin-left: calc(50% - 40px);
 }
-html, body {
-  overflow-x: hidden;
-}
 .timeline-content {
   display: flex;
   align-items: flex-start;
@@ -83,7 +80,7 @@ html, body {
 }
 
 .timeline-left .timeline-content {
-  margin-left: 20px;
+  margin-left: 80px;
   flex-direction: row-reverse;
   text-align: right;
 }
@@ -101,10 +98,6 @@ html, body {
   color: #333;
 }
 
-p {
-  margin: 0;
-  padding: 0;
-}
 
 /* Responsive Design */
 @media (max-width: 900px) {
