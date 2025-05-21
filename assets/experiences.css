@@ -1,6 +1,6 @@
 .timeline {
   position: relative;
-  max-width: 1500px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 2em 0;
 }
@@ -29,13 +29,13 @@
 }
 
 .timeline-left {
-  left: -31.7%;
+  left: -33%;
   justify-content: flex-end;
   text-align: right;
 }
 
 .timeline-right {
-  left: 41.7%;
+  left: 43%;
   justify-content: flex-start;
   text-align: left;
 }
@@ -46,7 +46,7 @@
   padding: .5em;
   width: 100%;
   position: relative;
-  font-size: 0.9em;
+  font-size: 1em;
 }
 
 .timeline-logo {
@@ -110,7 +110,7 @@
 
 
 /* Responsive Design */
-@media (max-width: 800px) {
+@media (max-width: 900px) {
   .timeline {
     max-width: 100%;
     padding: 1em 0;

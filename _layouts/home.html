@@ -7,39 +7,9 @@ layout: default
   <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%} {{ content }}
 
-  <h2 style="text-align: center; margin-bottom: 1em">
-    Professional Experience
-  </h2>
-  <div class="timeline">
-    {% assign experiences = site.experiences | sort: "start_date" | reverse %}
-    {% for exp in experiences %} {% assign remainder = forloop.index | modulo: 2
-    %} {% assign date_format = site.minima.date_format | default: "%b %Y" %}
-    <div
-      class="timeline-item {% if remainder == 0 %}timeline-right{% else %}timeline-left{% endif %}"
-    >
-      <div class="timeline-content">
-        <img
-          src="{{ exp.logo }}"
-          alt="{{ exp.company }} logo"
-          class="{% if remainder == 0 %}timeline-logo{% else %}timeline-logo-left{% endif %}"
-        />
-        <div class="timeline-details">
-          <h3>{{ exp.company }}</h3>
-          <div class="timeline-date">
-            {{ exp.start_date | date: date_format }} – {{ exp.end_date | date:
-            date_format }}
-          </div>
-          <div class="timeline-role">{{ exp.role }}</div>
-          <p>{{ exp.content }}</p>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-  </div>
+  {% include jobs.html %}
 
-  <h2 style="text-align: center; margin-top: 1em">
-    Papers
-  </h2> 
+  {% include papers.html %}
 
 
 </div>

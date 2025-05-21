@@ -1,0 +1,18 @@
+  <h2 style="text-align: center; margin-top: 1em">
+    Papers
+  </h2>
+
+<div class="papers-row">
+  {% assign sorted_papers = site.papers | sort: "date" | reverse %}
+  {% for paper in sorted_papers limit:10 %}
+    <div class="paper-card">
+      <a href="{{ paper.link }}" target="_blank">
+        <img src="{{ paper.thumbnail }}" alt="{{ paper.title }}" class="paper-thumb" />
+      </a>
+      <div class="paper-info">
+        <a href="{{ paper.link }}" target="_blank" class="paper-title">{{ paper.title }}</a>
+        <div class="paper-date">{{ paper.date | date: "%b %Y" }}</div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
