@@ -1,5 +1,8 @@
 <h2 style="text-align: center; margin-top: 1em">Papers</h2>
 <div class="papers-carousel-container">
+  <button class="papers-arrow papers-arrow-left" aria-label="Scroll Left">
+    &#8592;
+  </button>
   <div class="papers-row" id="papers-row">
     {% assign sorted_papers = site.papers | sort: "date" | reverse %} {% for
     paper in sorted_papers %}
@@ -17,10 +20,27 @@
           >{{ paper.title | truncatewords: 10, '...' }}</a
         >
       </div>
-
-
     </div>
 
     {% endfor %}
   </div>
+  <button class="papers-arrow papers-arrow-right" aria-label="Scroll Right">
+    &#8594;
+  </button>
 </div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const row = document.getElementById('papers-row');
+    const left = document.querySelector('.papers-arrow-left');
+    const right = document.querySelector('.papers-arrow-right');
+    const scrollAmount = 240; // matches paper-card width plus gap
+
+    left.addEventListener('click', () => {
+      row.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    right.addEventListener('click', () => {
+      row.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  });
+</script>
