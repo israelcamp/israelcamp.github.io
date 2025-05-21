@@ -1,26 +1,28 @@
-
 .papers-row {
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
   justify-content: center;
-  margin: 2em 0;
+  margin: 0 0 !important;
+  width: 80vw !important;
 }
 
 .paper-card {
   background: #fff;
   border-radius: 1em;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.09);
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 210px;
   padding: 1em;
-  transition: transform 0.14s, box-shadow 0.14s;
+  transition:
+    transform 0.14s,
+    box-shadow 0.14s;
 }
 .paper-card:hover {
   transform: translateY(-6px) scale(1.03);
-  box-shadow: 0 6px 28px rgba(0,0,0,0.13);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.23);
 }
 
 .paper-thumb {
@@ -29,11 +31,11 @@
   object-fit: cover;
   border-radius: 0.7em;
   margin-bottom: 0.7em;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.16s;
 }
 .paper-card:hover .paper-thumb {
-  box-shadow: 0 4px 18px rgba(50,70,120,0.16);
+  box-shadow: 0 4px 18px rgba(50, 70, 120, 0.16);
 }
 
 .paper-info {

@@ -6,7 +6,7 @@
 }
 
 .timeline::before {
-  content: '';
+  content: "";
   position: absolute;
   left: 50%;
   top: 0;
@@ -43,7 +43,7 @@
 .timeline-content {
   display: flex;
   align-items: flex-start;
-  padding: .5em;
+  padding: 0.5em;
   width: 100%;
   position: relative;
   font-size: 1em;
@@ -108,6 +108,21 @@
   margin-left: 1em;
 }
 
+.timeline-text-left {
+  line-height: 1.5em;
+  text-align: right;
+  justify-content: flex-end !important;
+  margin-left: 10vw;
+  max-width: 60vw;
+  color: #333;
+}
+
+.timeline-text-right {
+  line-height: 1.5em;
+  max-width: 40vw;
+  margin-left: 0;
+  color: #333;
+}
 
 /* Responsive Design */
 @media (max-width: 900px) {
@@ -134,5 +149,4 @@
     margin: 0 0 0 3em;
     max-width: 90vw;
   }
-
 }

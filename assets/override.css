@@ -5,3 +5,9 @@
   padding-right: 0 !important;
 }
 
+.home {
+  max-width: none !important;
+  width: 80vw !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
