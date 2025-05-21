@@ -1,10 +1,10 @@
-<h2 style="text-align: center; margin-bottom: 1em">Professional Experience</h2>
+<h2 style="text-align: center; margin-bottom: 1em; margin-top: 2em;">Professional Experience</h2>
 <div class="timeline">
   {% assign experiences = site.experiences | sort: "start_date" | reverse %} {%
   for exp in experiences %} {% assign remainder = forloop.index | modulo: 2 %}
   {% assign date_format = site.minima.date_format | default: "%b %Y" %}
   <div
-    class="timeline-item {% if remainder == 0 %}timeline-right{% else %}timeline-left{% endif %}"
+    class="{% if remainder == 0 %}timeline-right{% else %}timeline-left{% endif %}"
   >
     <div class="timeline-content">
       <img
