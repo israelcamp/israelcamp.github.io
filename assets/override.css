@@ -12,11 +12,42 @@
   padding-right: 0 !important;
 }
 
+.svg-icon {
+  width: 32px;
+  height: 32px;
+  fill: #000; /* set to your desired color */
+  transition: fill 0.2s;
+  vertical-align: middle;
+}
+
+.svg-icon:hover {
+  fill: #fff; /* example: change color on hover */
+}
+
+.site-footer {
+  margin-top: 20px !important;
+  background: linear-gradient(50deg, #6372ff 20%, #ff9800 100%) !important;
+  padding: 20px 20px !important;
+	display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+}
+
+.footer-text {
+  display: flex;
+  justify-content: center;
+  paddint-bottom: 10px;
+  color: #fff;
+}
+
 p {
   margin: 0;
   padding: 0;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
 }

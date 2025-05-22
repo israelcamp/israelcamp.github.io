@@ -1,28 +1,16 @@
-<footer class="site-footer h-card">
-  <data class="u-url" href="{{ "/" | relative_url }}"></data>
-
-  <div class="wrapper">
-
-   <div class="footer-col-wrapper">
-      <div class="footer-col footer-col-1">
-        <ul class="contact-list">
-          <li class="p-name">
-            {%- if site.author -%}
-              {{ site.author | escape }}
-            {%- endif -%}
-            </li>
-            {%- if site.email -%}
-            <li><a class="u-email" href="mailto:{{ site.email }}">{{ site.email }}</a></li>
-            {%- endif -%}
-        </ul>
-      </div>
-
-      <div class="footer-col footer-col-2">
-        {%- include social.html -%}
-      </div>
-
-    </div>
-
-  </div>
-
+<footer class="site-footer">
+  <p>Built with</p>
+  <a href="https://jekyllrb.com/">
+    <img
+      src="assets/jekyll.png"
+      alt="Jekyll"
+      style="
+        width: 5em;
+        aspect-ratio: 2;
+        margin-left: 0.5em;
+        margin-right: 0.5em;
+      "
+    />
+  </a>
+  <p>by {{ site.author | escape }}</p>
 </footer>

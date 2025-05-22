@@ -1,16 +1,21 @@
 <header role="banner">
- <!-- Header Start -->
- <div style="
+  <!-- Header Start -->
+  <div
+    style="
       display: flex;
       align-items: center;
       justify-content: center;
-      background: linear-gradient(110deg, #f7971e 0%, #ffd200 10%, #21c8f6 70%, #6372ff 100%);
+      background: linear-gradient(50deg, #6372ff 20%, #ff9800 100%) !important;
       background-blend-mode: multiply;
       padding: 2em 1em;
       max-width: 100%;
-      margin-bottom: 2em ;
-    ">
-  <img src="assets/me.jpeg" alt="{{site.author}}" style="
+      margin-bottom: 2em;
+    "
+  >
+    <img
+      src="assets/me.jpeg"
+      alt="{{site.author}}"
+      style="
         width: 160px;
         height: 160px;
         object-fit: cover;
@@ -19,22 +24,23 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
         margin-left: 30%;
         margin-right: 2em;
-      " />
-  <div style="flex: 1">
-   <h1 style="margin: 0 0 0.3em 0; font-size: 2.5em">
-    {{ site.author | escape }}
-   </h1>
-   <p style="margin: 0.4em 0">
-    {{ site.city }}, {{ site.state }} - {{ site.country}}
-   </p>
-   <p style="margin: 0.4em 0">
-    Applied Mathematician, Masters in Electrical Eng.
-   </p>
-   <p style="margin: 0.4em 0">
-    <a href="mailto:{{site.email}}">{{site.email}}</a>
-   </p>
+      "
+    />
 
+    <div style="flex: 1">
+      <h1 style="margin: 0 0 0.3em 0; font-size: 2.5em">
+        {{ site.author | escape }}
+      </h1>
+      <p style="margin: 0.4em 0">
+        {{ site.city }}, {{ site.state }} - {{ site.country}}
+      </p>
+      <p style="margin: 0.4em 0">
+        Applied Mathematician, Masters in Electrical Eng.
+      </p>
+      <p style="margin: 0.4em 0">
+        <a style="color: #000" href="mailto:{{site.email}}">{{site.email}}</a>
+      </p>
+    </div>
   </div>
- </div>
- <!-- Header End -->
+  <!-- Header End -->
 </header>
