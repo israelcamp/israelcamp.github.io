@@ -28,7 +28,7 @@
   margin-top: 20px !important;
   background: linear-gradient(50deg, #6372ff 20%, #ff9800 100%) !important;
   padding: 20px 20px !important;
-	display: flex !important;
+  display: flex !important;
   flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
@@ -40,6 +40,15 @@
   justify-content: center;
   paddint-bottom: 10px;
   color: #fff;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+  gap: 5px;
+  transform: translateY(2px);
 }
 
 p {
