@@ -1,33 +1,8 @@
 <header role="banner">
   <!-- Header Start -->
-  <div
-    style="
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: linear-gradient(50deg, #6372ff 20%, #ff9800 100%) !important;
-      background-blend-mode: multiply;
-      padding: 2em 1em;
-      max-width: 100%;
-      margin-bottom: 2em;
-    "
-  >
-    <img
-      src="assets/me.jpeg"
-      alt="{{site.author}}"
-      style="
-        width: 160px;
-        height: 160px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 4px solid #fff;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
-        margin-left: 30%;
-        margin-right: 2em;
-      "
-    />
 
-    <div style="flex: 1">
+  <div class="header-hero">
+    <div class="header-overlay">
       <h1 style="margin: 0 0 0.3em 0; font-size: 2.5em">
         {{ site.author | escape }}
       </h1>

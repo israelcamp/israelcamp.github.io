@@ -1,0 +1,24 @@
+.header-hero {
+  position: relative;
+  width: 100vw;
+  min-height: 60vh; /* or whatever looks good */
+  background-image: url('/assets/mywall.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.header-overlay {
+  background: rgba(255, 249, 220, 0.86);
+  padding: 2.5em 2em;
+  border-radius: 1.5em;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 90vw;
+  /* You can tweak these for your style! */
+}
+
