@@ -22,7 +22,7 @@
 }
 
 .svg-icon:hover {
-  fill: #fff; /* example: change color on hover */
+  fill: rgba(185, 215, 255, 0.80);
 }
 
 .site-footer {
