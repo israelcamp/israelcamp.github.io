@@ -6,4 +6,4 @@ role: Senior Data Scientist
 logo: /assets/c6.jpeg
 ---
 
-I developed tools for the C6 chatbot helping the businees team to decrease the time needed to add new features to the chatbot. I also worked in a Vision project that was made avaible for other analysts to use.
+I developed tools for the C6 chatbot, helping the businees team to decrease the time needed to add new features. I also worked in a Vision project that was made avaible for other analysts to use.
