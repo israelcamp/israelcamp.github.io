@@ -1,0 +1,128 @@
+.projects-carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 5em;
+}
+
+.projects-row {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  gap: 2em;
+  width: 90vw !important;
+  padding: 1em 0;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  scrollbar-width: thin;
+  scrollbar-color: #bbb #eee;
+}
+
+.projects-row::-webkit-scrollbar {
+  height: 8px;
+}
+
+.projects-row::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 8px;
+}
+
+.projects-row::-webkit-scrollbar-track {
+  background: #eee;
+}
+
+.project-card {
+  flex: 0 0 auto;
+  width: 210px;
+  background: linear-gradient(135deg, #fffbe7 0%, #f1f6fc 100%);
+  margin-top: 1em;
+  border-radius: 1em;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 210px;
+  padding: 1em;
+  transition:
+    transform 0.14s,
+    box-shadow 0.14s;
+  /* rest of your styles as before */
+}
+
+.project-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 6px 28px rgba(0, 0, 0, 0.23);
+}
+
+.project-thumb {
+  width: 170px;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 0.7em;
+  margin-bottom: 0.7em;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.16s;
+}
+
+.project-info {
+  text-align: center;
+}
+
+.project-title {
+  color: #2d4ea2;
+  font-size: 0.75em;
+  text-align: center;
+  overflow: hidden;
+  font-weight: 500;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 0.2em;
+  transition: color 0.15s;
+}
+
+/* Arrow styles */
+.projects-arrow {
+  background: #fff;
+  border: none;
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  font-size: 2em;
+  color: #4a5fd3;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.09);
+  margin: 0 0.4em;
+  cursor: pointer;
+  transition:
+    background 0.12s,
+    box-shadow 0.12s,
+    color 0.18s;
+  z-index: 2;
+}
+
+.projects-arrow:hover {
+  background: #4a5fd3;
+  color: #fff;
+}
+
+.projects-arrow:active {
+  background: #2d4ea2;
+}
+
+@media (max-width: 700px) {
+  .projects-row {
+    width: 98vw !important;
+    gap: 0.7em;
+  }
+
+  .project-card {
+    width: 68vw;
+    min-width: 130px;
+    max-width: 240px;
+  }
+
+  .projects-arrow {
+    font-size: 1.3em;
+    width: 34px;
+    height: 34px;
+  }
+}

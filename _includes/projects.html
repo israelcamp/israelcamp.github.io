@@ -1,0 +1,44 @@
+<h2 style="text-align: center; margin-top: 1em">Projects</h2>
+<div class="projects-carousel-container">
+  <button class="projects-arrow projects-arrow-left" aria-label="Scroll Left">
+    &#8592;
+  </button>
+  <div class="projects-row" id="projects-row">
+    {% for project in site.projects %}
+    <div class="project-card">
+      <a href="{{ project.link }}" target="_blank">
+        <img
+          src="{{ project.thumbnail }}"
+          alt="{{ project.title }}"
+          class="project-thumb"
+        />
+      </a>
+      <div class="project-info">
+        <a href="{{ project.link }}" target="_blank" class="project-title"
+          >{{ project.title | truncatewords: 10, '...' }}</a
+        >
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  <button class="projects-arrow projects-arrow-right" aria-label="Scroll Right">
+    &#8594;
+  </button>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const row = document.getElementById("projects-row");
+    const left = document.querySelector(".projects-arrow-left");
+    const right = document.querySelector(".projects-arrow-right");
+    const scrollAmount = 240; // matches project-card width plus gap
+
+    left.addEventListener("click", () => {
+      row.scrollBy({ left: -scrollAmount, behavior: "smooth" });
+    });
+    right.addEventListener("click", () => {
+      row.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    });
+  });
+</script>
