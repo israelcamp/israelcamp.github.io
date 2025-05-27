@@ -1,0 +1,22 @@
+.awards-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  gap: 5em;
+  flex-direction: row;
+}
+
+.award-item {
+  width: 20vw;
+}
+
+.award-title {
+  font-size: 1em;
+  font-weight: bold;
+  margin-bottom: 0.5em;
+  text-align: center;
+}
+
+.award-content p {
+  text-align: left;
+}

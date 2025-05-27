@@ -1,0 +1,17 @@
+<h2 style="text-align: center; margin-top: 1em">Awards</h2>
+
+<div class="awards-container">
+  {% for award in site.awards %}
+  <div class="award-item">
+    <details>
+      <summary class="award-title">{{award.title}}</summary>
+      <div class="award-content">
+        {{award.content}}
+        <a href="{{award.link}}" target="_blank">
+          <img src="assets/linking.png" width="18px" alt="{{award.title}}" />
+        </a>
+      </div>
+    </details>
+  </div>
+  {% endfor %}
+</div>
