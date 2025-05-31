@@ -5,4 +5,4 @@ role: Senior Data Scientist
 logo: /assets/icti.jpeg
 ---
 
-I work in the Itaú Unibanco's innovation lab, where I am responsible for developing and implementing advanced data science solutions to drive innovation and improve customer experiences. I have developed Generative AI agents that helps thousand of costumers with their payments.
+I work in the Itaú Unibanco's innovation lab, where I am responsible for developing and implementing advanced data science solutions to drive innovation and improve customer experiences. I have developed Generative AI agents that help thousands of custumers with their payments. Used technilogies include Python, LangChain and LangGraph.
