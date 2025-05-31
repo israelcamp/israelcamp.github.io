@@ -4,7 +4,7 @@
   min-height: 60vh; /* or whatever looks good */
   background-image: url('/assets/mywall3.png');
   background-size: cover;
-  background-position: 30% 20% ;
+  background-position: center 20% ;
   background-repeat: no-repeat;
   display: flex;
   align-items: center;
