@@ -1,0 +1,6 @@
+<h2 style="text-align: center; margin-bottom: 1em; margin-top: 2em">POSTS</h2>
+  {% for post in site.posts %} {% assign remainder = forloop.index | modulo: 2
+  %}
+<a href="{{ post.url }}">{{post.name}}</a><br/>
+  {{ post.desc }}
+  {% endfor %}
