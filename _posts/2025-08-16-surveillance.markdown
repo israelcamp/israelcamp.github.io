@@ -11,12 +11,12 @@ To build my own security system I am using as hardware:
 1. **TFT Display**: R\$50.00, around 9 USD.
 
 The software I am using are:
-1. Go server
+1. HTTP server written in Go
 1. Python for AI processes
 
 The idea is to install the ESP32-CAM at some spot in my house that allows me to see outside.
 The ESP32-CAM is connected to my house WiFi.
-I altered the default image quality and size to stream a 640x480 image.
+I altered the default image quality and size to stream a 640x480 image.<br><br>
 
 The Go sever will be my main form of connection to the camera feed. Because the ESP32-CAM cannot handle well multiple connections I decided to make a Go server that will stay connected to the camera feeds and keep the last frame on memory. This will allow me to fetch the image from the ESP32-CAM only once and feed it to as many connections as I need through the go server. This server will have 4 main endpoints:
 
@@ -29,21 +29,21 @@ The Go sever will be my main form of connection to the camera feed. Because the 
 
 The AI model will run in a python script. I found easier to use python as it has more support for different models and is easier to use them.
 The script will keep making requests to `/capture`, processing the imagem, drawing the bounding boxes around the detected objects and uploading the new image to another endpoint.
-The uploaded image will be the one served on `/aicapture` and `/streamai`.
+The uploaded image will be the one served on `/aicapture` and `/streamai`.<br><br>
 
-The model I am currently using is a **YOLO-v4-tiny** that I found the weights in github. It is super easy to use with `opencv2` and has good perfomance and speed.
+The model I am currently using is a **YOLO-v4-tiny** that I found the weights in github. It is super easy to use with `opencv2` and has good perfomance and speed.<br><br>
 
-**NOTE**: All the code is available [here](https://github.com/israelcamp/arduino-projects/tree/main/SurveillanceSystem).
+**NOTE**: All the code is available [here](https://github.com/israelcamp/arduino-projects/tree/main/SurveillanceSystem).<br><br>
 
 ## Setting up the ESP32-CAM
 
-I mostly follow this [guide](https://www.diyengineers.com/2023/04/13/esp32-cam-complete-guide/) to prepare the ESP32-CAM Web Server. It has all the information needed to connect the pins correctly and upload the code via the **Arduino-IDE**. Notice that if you use a programming board you do not need the FTDI board and can simply connect the ESP32-CAM to the computer using a micro-usb cable, like I did.
+I mostly follow this [guide](https://www.diyengineers.com/2023/04/13/esp32-cam-complete-guide/) to prepare the ESP32-CAM Web Server. It has all the information needed to connect the pins correctly and upload the code via the **Arduino-IDE**. Notice that if you use a programming board you do not need the FTDI board and can simply connect the ESP32-CAM to the computer using a micro-usb cable, like I did.<br><br>
 
-<img src="/assets/posts/surveillance/esp32withprogrammingboard.png" alt="ESP32-CAM with programming board" width="200"/>
+<img src="/assets/posts/surveillance/esp32withprogrammingboard.png" alt="ESP32-CAM with programming board" width="200"/><br><br>
 
-The code for the server can be found in the examples for the ESP32-CAM in the Arduino-IDE, however I made a few changes. I removed any unnecessary conditional and information in the code. I also changed the default quality and framesize to **6** and **640x480**, respectively. Because I might deploy in different places, that have different WiFi, I creadted a function that would test both WiFi and keep connected to the one with the strongest signal.
+The code for the server can be found in the examples for the ESP32-CAM in the Arduino-IDE, however I made a few changes. I removed any unnecessary conditional and information in the code. I also changed the default quality and framesize to **6** and **640x480**, respectively. Because I might deploy in different places, that have different WiFi, I creadted a function that would test both WiFi and keep connected to the one with the strongest signal.<br><br>
 
-Here is the main code for the ESP32-CAM Web Server:
+Here is the main code for the ESP32-CAM Web Server:<br><br>
 
 ```cpp
 #include "esp_camera.h"
@@ -114,12 +114,12 @@ void loop() {
 }
 ```
 
-## Setting up the Go server
+## Setting up the HTTP server in Go
 
 Because I had troubles opening multiple connections to the ESP32-CAM Web Server, probably because it can not handle much since its already video streaming, I decided to create a server using **Golang**.
-This server is responsible for connecting to the video streaming and keep the current frame in buffer, any client connecting to it will receive the current frame captured from the camera, this allows a single connection to the ESP32-CAM, but it does not limit the number of clients that can receive the video streaming.
+This server is responsible for connecting to the video streaming and keep the current frame in buffer, any client connecting to it will receive the current frame captured from the camera, this allows a single connection to the ESP32-CAM, but it does not limit the number of clients that can receive the video streaming.<br><br>
 
-The idea for the future is to have more micro-controllers connected to this server that can receive and send requests, so that I can control multiple micro-controllers from a single application.
+The idea for the future is to have more micro-controllers connected to this server that can receive and send requests, so that I can control multiple micro-controllers from a single application.<br><br>
 
 A **go** coroutine runs in the background as soon as the applications is initiated, this is responsible for updating the current frame taken from the camera. The endpoints that serves the images directly are:
 
@@ -130,11 +130,10 @@ A **go** coroutine runs in the background as soon as the applications is initiat
 We will also allow upload of frames that were processed by AI. This is done through the endpoint `/aiupload`. This endpoints expects an image that has bounding box drawn into it and a header that will inform if a person was detected in this image or not.
 
 The frames received by `/aiupload` are then served via these endpoints:
-
 1. `/aicapture`
 1. `/streamai`
 
-The `/aicapture` endpoints also sends in its header if the there was a person detected in the current frame. The main function for the server is:
+The `/aicapture` endpoints also sends in its header if the there was a person detected in the current frame. The main function for the server is:<br><br>
 
 ```go
 func main() {
@@ -153,15 +152,15 @@ func main() {
   http.ListenAndServe(":8090", nil)
 }
 ```
-The config is read from an **YAML** file that contains variables like the ESP32-CAM url. The `keepSavingFrame` function allows saving the last frame if a person was detected and the `FetchFrameLoop` is responsible for retrieving the newest frame from ESP32-CAM and saving it to the `frame` variable.
+The config is read from an **YAML** file that contains variables like the ESP32-CAM url. The `keepSavingFrame` function allows saving the last frame if a person was detected and the `FetchFrameLoop` is responsible for retrieving the newest frame from ESP32-CAM and saving it to the `frame` variable.<br><br>
 
 ## AI Process
 
-After browsing around some models and methods to run a computer vision model, I haved decided to use **yolov4-tiny** with **opencv** in **Python**. I thought about using C++ or maybe even Go directly, but the setup was not as easy and I found that the chosen combination still provides good performance at a reasonable speed. I am processing 4 images per second, this felt enough for my purposes.
+After browsing around some models and methods to run a computer vision model, I haved decided to use **yolov4-tiny** with **opencv** in **Python**. I thought about using C++ or maybe even Go directly, but the setup was not as easy and I found that the chosen combination still provides good performance at a reasonable speed. I am processing 4 images per second, this felt enough for my purposes.<br><br>
 
-The main python script simply starts an infinite loops that keeps calling `/b64capture` endpoint to fetch the latest frame already encoded in base64, this made also easier to decode the image and feed to the model loaded with **opencv**. The model detects a number of classes, including person, dog, laptop and so on. Every detected class along with is bouding box will be shown in the image, however we only keep track of persons detected. The new image and the information of person detectition are sent to the `/aiupload` endpoint, then after a small interval we start the process again.
+The main python script simply starts an infinite loops that keeps calling `/b64capture` endpoint to fetch the latest frame already encoded in base64, this made also easier to decode the image and feed to the model loaded with **opencv**. The model detects a number of classes, including person, dog, laptop and so on. Every detected class along with is bouding box will be shown in the image, however we only keep track of persons detected. The new image and the information of person detectition are sent to the `/aiupload` endpoint, then after a small interval we start the process again.<br><br>
 
-This separates the AI process from the main the server, allowing to run them in separate machines if needed and swapping the model without downsides to the server.
+This separates the AI process from the main the server, allowing to run them in separate machines if needed and swapping the model without downsides to the server.<br><br>
 
 ## Deploying
 
