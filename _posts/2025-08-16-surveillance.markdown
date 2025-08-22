@@ -21,10 +21,11 @@ I altered the default image quality and size to stream a 640x480 image.
 The Go sever will be my main form of connection to the camera feed. Because the ESP32-CAM cannot handle well multiple connections I decided to make a Go server that will stay connected to the camera feeds and keep the last frame on memory. This will allow me to fetch the image from the ESP32-CAM only once and feed it to as many connections as I need through the go server. This server will have 4 main endpoints:
 
 1. `/stream` - opens a connection to keep feeding the client with the latest frame from the ESP32-CAM
-1. `/capture` - serves the last frame in base64
+1. `/capture` - serves the last frame
+1. `/b64capture` - same as `/capture` but encodes to base64 before serving the frame
 1. `/streamai` - the same as `/stream` with the difference that the image fed has been processed by a YOLO model for object detection
 1. `/aicapture` - the same as `/capture` but with the image processed by AI
-1. `/ai` - endpoint for uploading images with the predicted bounding boxes
+1. `/aiupload` - endpoint for uploading images with the predicted bounding boxes
 
 The AI model will run in a python script. I found easier to use python as it has more support for different models and is easier to use them.
 The script will keep making requests to `/capture`, processing the imagem, drawing the bounding boxes around the detected objects and uploading the new image to another endpoint.
@@ -37,6 +38,8 @@ The model I am currently using is a **YOLO-v4-tiny** that I found the weights in
 ## Setting up the ESP32-CAM
 
 I mostly follow this [guide](https://www.diyengineers.com/2023/04/13/esp32-cam-complete-guide/) to prepare the ESP32-CAM Web Server. It has all the information needed to connect the pins correctly and upload the code via the **Arduino-IDE**. Notice that if you use a programming board you do not need the FTDI board and can simply connect the ESP32-CAM to the computer using a micro-usb cable, like I did.
+
+<img src="/assets/posts/surveillance/esp32withprogrammingboard.png" alt="ESP32-CAM with programming board" width="200"/>
 
 The code for the server can be found in the examples for the ESP32-CAM in the Arduino-IDE, however I made a few changes. I removed any unnecessary conditional and information in the code. I also changed the default quality and framesize to **6** and **640x480**, respectively. Because I might deploy in different places, that have different WiFi, I creadted a function that would test both WiFi and keep connected to the one with the strongest signal.
 
@@ -107,7 +110,6 @@ void setup() {
 }
 
 void loop() {
-  // Do nothing. Everything is done in another task by the web server
   delay(100000);
 }
 ```
@@ -119,11 +121,48 @@ This server is responsible for connecting to the video streaming and keep the cu
 
 The idea for the future is to have more micro-controllers connected to this server that can receive and send requests, so that I can control multiple micro-controllers from a single application.
 
-A **go** coroutine runs in the background as soon as the applications is initiaded, this is responsible for updating the current frame taken from the camera. The endpoints that serves the images directly are:
+A **go** coroutine runs in the background as soon as the applications is initiated, this is responsible for updating the current frame taken from the camera. The endpoints that serves the images directly are:
 
-1. `/stream` - opens a connection to keep feeding the client with the latest frame from the ESP32-CAM
-1. `/capture` - serves the last frame
-1. `/b64capture` - servers the last frame in base64
+1. `/stream`
+1. `/capture`
+1. `/b64capture`
 
+We will also allow upload of frames that were processed by AI. This is done through the endpoint `/aiupload`. This endpoints expects an image that has bounding box drawn into it and a header that will inform if a person was detected in this image or not.
 
+The frames received by `/aiupload` are then served via these endpoints:
 
+1. `/aicapture`
+1. `/streamai`
+
+The `/aicapture` endpoints also sends in its header if the there was a person detected in the current frame. The main function for the server is:
+
+```go
+func main() {
+  cfg := config.ReadConfig()
+
+  go keepSavingFrame(cfg)
+  go capture.FetchFrameLoop(cfg, &mu, &frame)
+
+  http.HandleFunc("/aiupload", receiveAIFrame)
+  http.HandleFunc("/capture", serveFrame)
+  http.HandleFunc("/b64capture", serveB64Frame)
+  http.HandleFunc("/aicapture", serveAIFrame)
+  http.HandleFunc("/stream", streamHandler)
+  http.HandleFunc(("/streamai"), streamAIHandler)
+
+  http.ListenAndServe(":8090", nil)
+}
+```
+The config is read from an **YAML** file that contains variables like the ESP32-CAM url. The `keepSavingFrame` function allows saving the last frame if a person was detected and the `FetchFrameLoop` is responsible for retrieving the newest frame from ESP32-CAM and saving it to the `frame` variable.
+
+## AI Process
+
+After browsing around some models and methods to run a computer vision model, I haved decided to use **yolov4-tiny** with **opencv** in **Python**. I thought about using C++ or maybe even Go directly, but the setup was not as easy and I found that the chosen combination still provides good performance at a reasonable speed. I am processing 4 images per second, this felt enough for my purposes.
+
+The main python script simply starts an infinite loops that keeps calling `/b64capture` endpoint to fetch the latest frame already encoded in base64, this made also easier to decode the image and feed to the model loaded with **opencv**. The model detects a number of classes, including person, dog, laptop and so on. Every detected class along with is bouding box will be shown in the image, however we only keep track of persons detected. The new image and the information of person detectition are sent to the `/aiupload` endpoint, then after a small interval we start the process again.
+
+This separates the AI process from the main the server, allowing to run them in separate machines if needed and swapping the model without downsides to the server.
+
+## Deploying
+
+With this in place we can already access images from the camera with or without AI predictions via our home network, simply by acessing the IP address in our browsings in our phones and notebooks. However I also wanted a small screen in my house that would be always connected to the server displaying the images. 
