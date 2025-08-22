@@ -1,6 +1,48 @@
-<h2 style="text-align: center; margin-bottom: 1em; margin-top: 2em">POSTS</h2>
-  {% for post in site.posts %} {% assign remainder = forloop.index | modulo: 2
-  %}
-<a href="{{ post.url }}">{{post.name}}</a><br/>
-  {{ post.desc }}
-  {% endfor %}
+
+<h2 style="text-align: center; margin-top: 1em">Posts</h2>
+<div class="papers-carousel-container">
+  <button class="papers-arrow papers-arrow-left" aria-label="Scroll Left">
+    &#8592;
+  </button>
+  <div class="papers-row" id="papers-row">
+    {% assign sorted_papers = site.posts | sort: "date" | reverse %} {% for
+    paper in sorted_papers %}
+    <div class="paper-card">
+      <div class="paper-date">{{ paper.date | date: "%b %Y" }}</div>
+      <a href="{{ paper.link }}" target="_blank">
+        <img
+          src="{{ paper.thumbnail }}"
+          alt="{{ paper.name }}"
+          class="paper-thumb"
+        />
+      </a>
+      <div class="paper-info">
+        <a href="{{ paper.url }}" target="_blank" class="paper-title"
+          >{{ paper.name | truncatewords: 10, '...' }}</a
+        >
+      </div>
+    </div>
+
+    {% endfor %}
+  </div>
+  <button class="papers-arrow papers-arrow-right" aria-label="Scroll Right">
+    &#8594;
+  </button>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    const row = document.getElementById('papers-row');
+    const left = document.querySelector('.papers-arrow-left');
+    const right = document.querySelector('.papers-arrow-right');
+    const scrollAmount = 240; // matches paper-card width plus gap
+
+    left.addEventListener('click', () => {
+      row.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    });
+    right.addEventListener('click', () => {
+      row.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    });
+  });
+</script>
+

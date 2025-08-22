@@ -2,6 +2,7 @@
 layout: post_content
 name: Homemad Surveillance System
 desc: How I built a homemade surveillance system using opensource software and ESP32 boards.
+thumbnail: /assets/posts/surveillance/esp32withprogrammingboard.png
 date: 2025-08-16 
 ---
 
@@ -33,7 +34,7 @@ The uploaded image will be the one served on `/aicapture` and `/streamai`.<br><b
 
 The model I am currently using is a **YOLO-v4-tiny** that I found the weights in github. It is super easy to use with `opencv2` and has good perfomance and speed.<br><br>
 
-**NOTE**: All the code is available [here](https://github.com/israelcamp/arduino-projects/tree/main/SurveillanceSystem).<br><br>
+**NOTE**: All the code is available [here](https://github.com/israelcamp/arduino-projects)<br><br>
 
 ## Setting up the ESP32-CAM
 
@@ -114,6 +115,9 @@ void loop() {
 }
 ```
 
+**NOTE**: The code for the camera server can be found [here](https://github.com/israelcamp/arduino-projects/tree/main/CameraWebServer).<br><br>
+
+
 ## Setting up the HTTP server in Go
 
 Because I had troubles opening multiple connections to the ESP32-CAM Web Server, probably because it can not handle much since its already video streaming, I decided to create a server using **Golang**.
@@ -154,6 +158,8 @@ func main() {
 ```
 The config is read from an **YAML** file that contains variables like the ESP32-CAM url. The `keepSavingFrame` function allows saving the last frame if a person was detected and the `FetchFrameLoop` is responsible for retrieving the newest frame from ESP32-CAM and saving it to the `frame` variable.<br><br>
 
+**NOTE**: The code for the HTTP server is [here](https://github.com/israelcamp/arduino-projects/tree/main/SurveillanceSystem/goserver).<br><br>
+
 ## AI Process
 
 After browsing around some models and methods to run a computer vision model, I haved decided to use **yolov4-tiny** with **opencv** in **Python**. I thought about using C++ or maybe even Go directly, but the setup was not as easy and I found that the chosen combination still provides good performance at a reasonable speed. I am processing 4 images per second, this felt enough for my purposes.<br><br>
@@ -162,6 +168,69 @@ The main python script simply starts an infinite loops that keeps calling `/b64c
 
 This separates the AI process from the main the server, allowing to run them in separate machines if needed and swapping the model without downsides to the server.<br><br>
 
+**NOTE**: The code for the AI process can be found [here](https://github.com/israelcamp/arduino-projects/tree/main/SurveillanceSystem/pythonai).<br><br>
+
 ## Deploying
 
-With this in place we can already access images from the camera with or without AI predictions via our home network, simply by acessing the IP address in our browsings in our phones and notebooks. However I also wanted a small screen in my house that would be always connected to the server displaying the images. 
+With this in place we can already access images from the camera with or without AI predictions via our home network, simply by acessing the IP address in our browsings in our phones and notebooks. However I also wanted a small screen in my house that would be always connected to the server displaying the images.
+
+In order to achieve this goal, I bought a TFT display:<br><br>
+
+<img src="/assets/posts/surveillance/tftmeli.jpeg" alt="TFT Display" width="200"/><br><br>
+
+This display is only 1.3 inches and fits an image of 240x240, so I need to do some resizing before display the image. However it easy to work with. It only needs 4 pins for sending data and can be worked with using the **TFT_eSPI** and **TJpg_Decoder** libraries.<br><br>
+
+The second piece of hardware is an **ESP32** board with WiFi:<br><br>
+
+<img src="/assets/posts/surveillance/esp32wifimeli.jpeg" alt="ESP32 WiFi" width="200"/><br><br>
+
+This board is similar to the **ESP32-CAM**, with the difference being clear that it has no camera module and it supports more connections and has a micro-usb built-in. Together with a WiFi chip and 4MB of memory, it was a good choice for connecting to the HTTP server, retrieve the last frame and displaying it in the TFT display.<br><br>
+
+Here is the code:<br><br>
+
+```cpp
+#include "tft_setup.h"
+#include "mywifi.h"
+#include <HTTPClient.h>
+#include <TJpg_Decoder.h>
+#include <SPI.h>
+#include <TFT_eSPI.h>
+
+#include "NotoSansBold36.h"
+#define AA_FONT_LARGE NotoSansBold36
+
+TFT_eSPI tft = TFT_eSPI();
+
+bool tftOutput(int16_t x,int16_t y,uint16_t w,uint16_t h,uint16_t *bmp){
+  if (y >= tft.height()) return 0;
+  tft.pushImage(x, y, w, h, bmp);
+  return 1;
+}
+
+void setup(){
+    // setup monitor and wifi ...
+}
+
+void loop(){
+  HTTPClient http;
+  http.begin(serverUrl);
+
+  if (http.GET()==HTTP_CODE_OK){
+    int len = http.getSize();
+    auto *buf = (uint8_t*) heap_caps_malloc(len, MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
+    http.getStreamPtr()->readBytes(buf,len);
+    uint16_t w,h; TJpgDec.getJpgSize(&w,&h,buf,len);
+    TJpgDec.drawJpg(0, 0, buf, len);
+    free(buf);
+  } else {
+    tft.fillScreen(TFT_BLACK);
+  }
+  http.end();
+
+  // Wait before drawing again
+  delay(250);
+}
+```
+
+**NOTE**: The complete code can be found [here](https://github.com/israelcamp/arduino-projects/blob/main/AIImage/AIImage.ino).<br><br>
+
