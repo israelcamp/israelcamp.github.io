@@ -9,7 +9,7 @@
     paper in sorted_papers %}
     <div class="paper-card">
       <div class="paper-date">{{ paper.date | date: "%b %Y" }}</div>
-      <a href="{{ paper.link }}" target="_blank">
+      <a href="{{ paper.url }}" target="_blank">
         <img
           src="{{ paper.thumbnail }}"
           alt="{{ paper.name }}"
