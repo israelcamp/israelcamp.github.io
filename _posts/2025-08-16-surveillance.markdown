@@ -1,6 +1,6 @@
 ---
 layout: post_content
-name: Homemad Surveillance System
+name: Homemade Surveillance System
 desc: How I built a homemade surveillance system using opensource software and ESP32 boards.
 thumbnail: /assets/posts/surveillance/esp32withprogrammingboard.png
 date: 2025-08-16 
@@ -178,7 +178,7 @@ In order to achieve this goal, I bought a TFT display:<br><br>
 
 <img src="/assets/posts/surveillance/tftmeli.jpeg" alt="TFT Display" width="200"/><br><br>
 
-This display is only 1.3 inches and fits an image of 240x240, so I need to do some resizing before display the image. However it easy to work with. It only needs 4 pins for sending data and can be worked with using the **TFT_eSPI** and **TJpg_Decoder** libraries.<br><br>
+This display is only 1.3 inches and fits an image of 240x240, so I need to do some resizing before displayin the image. However it easy to work with. It only needs 4 pins for reciving data and can be worked with using the **TFT_eSPI** and **TJpg_Decoder** libraries.<br><br>
 
 The second piece of hardware is an **ESP32** board with WiFi:<br><br>
 
