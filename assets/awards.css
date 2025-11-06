@@ -1,22 +1,157 @@
-.awards-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  gap: 5em;
-  flex-direction: row;
+
+/* --- Design tokens --- */
+:root {
+  --bg: #ffffff;
+  --card: #ffffff;
+  --text: #0f172a;
+  --muted: #64748b;
+  --ring: #3b82f6;
+  --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
+  --radius: 1.25rem;
+  --pad: 1rem;
 }
 
-.award-item {
-  width: 20vw;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0b1220;
+    --card: #0f172a;
+    --text: #e5e7eb;
+    --muted: #94a3b8;
+    --ring: #60a5fa;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
 }
+
+/* --- Heading --- */
+.awards-heading {
+  text-align: center;
+  margin: 2.5rem 0 1.25rem;
+  font-size: clamp(1.5rem, 1rem + 2vw, 2rem);
+  color: black;
+}
+
+/* --- Layout --- */
+.awards-container {
+  --cols: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+  align-items: start;
+}
+
+@media (min-width: 640px) { .awards-container { --cols: 2; } }
+@media (min-width: 1024px){ .awards-container { --cols: 3; } }
+
+/* --- Card --- */
+.award-card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid rgba(148,163,184,0.15);
+  overflow: clip;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+
+.award-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(2, 6, 23, 0.12);
+  border-color: rgba(59,130,246,.35);
+}
+
+/* --- Details / Summary --- */
+.award-details { display: block; }
+
+.award-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: calc(var(--pad) * 1.25) calc(var(--pad) * 1.25);
+  cursor: pointer;
+  list-style: none;
+  user-select: none;
+  outline: none;
+}
+
+.award-summary::-webkit-details-marker { display: none; }
+.award-summary::marker { content: ""; }
 
 .award-title {
-  font-size: 1em;
-  font-weight: bold;
-  margin-bottom: 0.5em;
-  text-align: center;
+  font-weight: 700;
+  font-size: clamp(.95rem, .85rem + .3vw, 1.05rem);
+  line-height: 1.2;
 }
 
-.award-content p {
-  text-align: left;
+/* Chevron */
+.chevron {
+  width: 1rem; height: 1rem; flex-shrink: 0;
+  border-right: 2px solid var(--muted);
+  border-bottom: 2px solid var(--muted);
+  transform: rotate(-45deg);
+  transition: transform .2s ease, border-color .2s ease;
 }
+
+.award-details[open] .chevron {
+  transform: rotate(45deg);
+  border-color: var(--ring);
+}
+
+/* Focus ring for a11y */
+.award-summary:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 45%, transparent);
+  border-radius: var(--radius);
+}
+
+/* --- Content --- */
+.award-content {
+  padding: 0 calc(var(--pad) * 1.25) calc(var(--pad) * 1.25);
+  color: var(--text);
+  display: grid;
+  gap: .75rem;
+  /* Intro animation */
+  animation: content-reveal .22s ease-out;
+}
+
+@keyframes content-reveal {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Paragraphs inside award content */
+.award-content p { margin: 0; color: var(--text); }
+
+/* External link pill */
+.award-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  width: fit-content;
+  padding: .4rem .6rem;
+  border-radius: 999px;
+  border: 1px solid rgba(148,163,184,.35);
+  text-decoration: none;
+  font-size: .9rem;
+  color: var(--muted);
+  transition: border-color .2s ease, color .2s ease, background .2s ease;
+}
+
+.award-link:hover {
+  color: var(--ring);
+  border-color: var(--ring);
+  background: color-mix(in oklab, var(--ring) 10%, transparent);
+}
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* Motion sensitivity */
+@media (prefers-reduced-motion: reduce) {
+  .award-card, .chevron, .award-content { transition: none; animation: none; }
+}
+

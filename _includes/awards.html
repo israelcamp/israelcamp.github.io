@@ -1,17 +1,36 @@
-<h2 style="text-align: center; margin-top: 1em">Awards</h2>
+<h2 class="awards-heading">Awards</h2>
 
 <div class="awards-container">
   {% for award in site.awards %}
-  <div class="award-item">
-    <details>
-      <summary class="award-title">{{award.title}}</summary>
+  <article class="award-card">
+    <details class="award-details">
+      <summary class="award-summary">
+        <span class="award-title">{{ award.title }}</span>
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+
       <div class="award-content">
-        {{award.content}}
-        <a href="{{award.link}}" target="_blank">
-          <img src="assets/linking.png" width="18px" alt="{{award.title}}" />
+        {{ award.content }}
+        <a class="award-link" href="{{ award.link }}" target="_blank" rel="noopener">
+          <img src="assets/linking.png" width="18" height="18" alt="Open link for {{ award.title }}" />
+          <span class="sr-only">Open external link</span>
         </a>
       </div>
     </details>
-  </div>
+  </article>
   {% endfor %}
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const all = document.querySelectorAll('.awards-container details');
+    all.forEach(d => {
+      d.addEventListener('toggle', () => {
+        if (d.open) {
+          all.forEach(o => { if (o !== d) o.open = false; });
+        }
+      });
+    });
+  });
+</script>
