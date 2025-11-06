@@ -2,10 +2,10 @@
 /* --- Design tokens --- */
 :root {
   --bg: #ffffff;
-  --card: #ffffff;
+  --card: #3E6AE1;
   --text: #0f172a;
-  --muted: #64748b;
-  --ring: #3b82f6;
+  --muted: #0f172a;
+  --ring: blue;
   --shadow: 0 10px 25px rgba(2, 6, 23, 0.08);
   --radius: 1.25rem;
   --pad: 1rem;
@@ -14,7 +14,7 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg: #0b1220;
-    --card: #0f172a;
+    --card: #2d4ea2;
     --text: #e5e7eb;
     --muted: #94a3b8;
     --ring: #60a5fa;
@@ -137,12 +137,13 @@
   font-size: .9rem;
   color: var(--muted);
   transition: border-color .2s ease, color .2s ease, background .2s ease;
+  background: white;
 }
 
 .award-link:hover {
   color: var(--ring);
-  border-color: var(--ring);
-  background: color-mix(in oklab, var(--ring) 10%, transparent);
+  border: 1px solid var(--ring);
+  background-color: #6372ff;
 }
 
 .sr-only {
