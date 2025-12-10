@@ -24,5 +24,15 @@
       ></use>
     </svg>
   </a>
+  {% endif %} {% if site.substack %}
+  <a
+      href="{{site.substack}}"
+    ><svg class="svg-icon">
+      <use
+        xlink:href="{{ '/assets/minima-social-icons.svg#substack' | relative_url }}"
+      ></use>
+    </svg>
+  </a>
   {% endif %}
+
 </div>
