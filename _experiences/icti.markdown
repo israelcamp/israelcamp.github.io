@@ -1,7 +1,7 @@
 ---
 company: Instituto de Ciência e Tecnologia do Itaú
 start_date: 2024-06-01
-end_date: present
+end_date: 2025-12-01
 role: Senior Data Scientist
 logo: /assets/icti.jpeg
 ---
